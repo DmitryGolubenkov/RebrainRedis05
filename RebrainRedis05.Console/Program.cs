@@ -10,8 +10,7 @@ using System.Text;
 
 
 // Путь к файлу
-var path = args.Length > 0 ? args[0] : "C:\\Users\\xxdim\\source\\repos\\Litero\\src\\Litero.Users.API\\bin\\Debug\\net7.0\\dapr\\components\\session_storage.yaml";
-
+var path = args[0];
 byte[] result = null;
 
 // Redis
@@ -35,11 +34,17 @@ else
         var byteCount = stream.Length;
 
         // Если нужно - смещаемся 
-        if (byteCount > 100)
+        /*  if (byteCount > 100)
+          {
+              // Переходим на позицию количество байт - 100
+              stream.Seek(byteCount - 100, SeekOrigin.Begin);
+          }*/
+
+        while (stream.Position < byteCount - 100)
         {
-            // Переходим на позицию количество байт - 100
-            stream.Seek(byteCount - 100, SeekOrigin.Begin);
+            stream.ReadByte();
         }
+
         // Пишем в буфер конец файла
         result = new byte[100];
         await stream.ReadAsync(result);
