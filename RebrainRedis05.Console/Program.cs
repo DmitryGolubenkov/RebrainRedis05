@@ -51,6 +51,5 @@ else
     }
 }
 
-Console.WriteLine(result.Length);
 // Выводим результат программы
 Console.Write(Encoding.UTF8.GetString(result));
