@@ -10,7 +10,7 @@ using System.Text;
 
 
 // Путь к файлу
-var path = args[0];
+var path = args.Length > 0 ? args[0] : "C:\\Users\\xxdim\\source\\repos\\Litero\\src\\Litero.Users.API\\bin\\Debug\\net7.0\\dapr\\components\\session_storage.yaml";
 
 byte[] result = null;
 
@@ -38,7 +38,7 @@ else
         if (byteCount > 100)
         {
             // Переходим на позицию количество байт - 100
-            stream.Seek(byteCount - 101, SeekOrigin.Begin);
+            stream.Seek(byteCount - 100, SeekOrigin.Begin);
         }
         // Пишем в буфер конец файла
         result = new byte[100];
@@ -51,5 +51,6 @@ else
     }
 }
 
+Console.WriteLine(result.Length);
 // Выводим результат программы
 Console.Write(Encoding.UTF8.GetString(result));
