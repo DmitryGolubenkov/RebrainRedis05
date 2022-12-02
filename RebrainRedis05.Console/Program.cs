@@ -34,16 +34,13 @@ else
         var byteCount = stream.Length;
 
         // Если нужно - смещаемся 
-        /*  if (byteCount > 100)
+          if (byteCount > 100)
           {
               // Переходим на позицию количество байт - 100
-              stream.Seek(byteCount - 100, SeekOrigin.Begin);
-          }*/
+              //stream.Seek(byteCount - 100, SeekOrigin.Begin);
+              stream.Position = byteCount - 100;
+          }
 
-        while (stream.Position < byteCount - 100)
-        {
-            stream.ReadByte();
-        }
 
         // Пишем в буфер конец файла
         result = new byte[100];
