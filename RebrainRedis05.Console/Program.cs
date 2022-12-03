@@ -27,25 +27,20 @@ if (cachedValue.HasValue)
 }
 else
 {
+    // Находим количество байт в файле
+    var byteCount = new FileInfo(path).Length;
     // Читаем файл
-    using (var stream = File.OpenRead(path))
+    using (FileStream stream = File.OpenRead(path))
     {
-        // Находим количество байт в файле
-        var byteCount = stream.Length;
 
-        // Если нужно - смещаемся 
-          if (byteCount > 100)
-          {
-              // Переходим на позицию количество байт - 100
-              //stream.Seek(byteCount - 100, SeekOrigin.Begin);
-              stream.Position = byteCount - 100;
-          }
+        while(byteCount - stream.Position > 100)
+        {
+            stream.ReadByte();
+        }
 
 
-        // Пишем в буфер конец файла
         result = new byte[100];
         await stream.ReadAsync(result);
-
 
         // Сохраняем в Redis
         var encodedBytes = Convert.ToBase64String(result);
