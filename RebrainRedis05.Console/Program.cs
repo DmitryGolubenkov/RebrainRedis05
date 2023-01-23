@@ -11,42 +11,53 @@ using System.Text;
 
 // Путь к файлу
 var path = args[0];
-byte[] result = null;
 
-// Redis
 
-ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost:6379");
-IDatabase db = redis.GetDatabase();
+var result = await Executor.Execute(path);
+// Выводим результат программы
+Console.Write(result);
 
-// Пробуем получить значение из Redis
-var cachedValue = await db.StringGetAsync(path);
-if (cachedValue.HasValue)
+
+public static class Executor
 {
-    // Если есть - декодируем и пишем в результат
-    result = Convert.FromBase64String(cachedValue.ToString());
-}
-else
-{
-    // Находим количество байт в файле
-    var byteCount = new FileInfo(path).Length;
-    // Читаем файл
-    using (FileStream stream = File.OpenRead(path))
+    public static async Task<string> Execute(string path)
     {
+        // Redis
+        ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost:6379");
+        IDatabase db = redis.GetDatabase();
 
-        while(byteCount - stream.Position > 100)
+        byte[] result = null;
+        // Пробуем получить значение из Redis
+        var cachedValue = await db.StringGetAsync(path);
+        if (cachedValue.HasValue)
         {
-            stream.ReadByte();
+            // Если есть - декодируем и пишем в результат
+            result = Convert.FromBase64String(cachedValue.ToString());
+        }
+        else
+        {
+            // Находим количество байт в файле
+            var byteCount = new FileInfo(path).Length;
+            // Читаем файл
+            using (FileStream stream = File.OpenRead(path))
+            {
+
+                while (byteCount - stream.Position > 100)
+                {
+                    stream.ReadByte();
+                }
+
+
+                result = new byte[100];
+                await stream.ReadAsync(result);
+
+                // Сохраняем в Redis
+                var encodedBytes = Convert.ToBase64String(result);
+                db.StringSet(path, encodedBytes);
+            }
+
         }
 
-
-        result = new byte[100];
-        await stream.ReadAsync(result);
-
-        // Сохраняем в Redis
-        var encodedBytes = Convert.ToBase64String(result);
-        db.StringSet(path, encodedBytes);
+        return Encoding.UTF8.GetString(result);
     }
 }
-
-// Выводим результат программы
-Console.Write(Encoding.UTF8.GetString(result));

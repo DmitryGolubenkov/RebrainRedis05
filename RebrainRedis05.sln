@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RebrainRedis05.Console", "RebrainRedis05.Console\RebrainRedis05.Console.csproj", "{91C2F092-C158-4447-9387-1222AB459B69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RebrainRedis05.Console", "RebrainRedis05.Console\RebrainRedis05.Console.csproj", "{91C2F092-C158-4447-9387-1222AB459B69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{1E12D9E4-457F-42A7-8DE5-11F4CA15AD27}"
 	ProjectSection(SolutionItems) = preProject
 		setup.sh = setup.sh
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RebrainRedis05.Test", "RebrainRedis05.Test\RebrainRedis05.Test.csproj", "{63590C4B-77D4-4A97-8472-77365B96F725}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{91C2F092-C158-4447-9387-1222AB459B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91C2F092-C158-4447-9387-1222AB459B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91C2F092-C158-4447-9387-1222AB459B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63590C4B-77D4-4A97-8472-77365B96F725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63590C4B-77D4-4A97-8472-77365B96F725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63590C4B-77D4-4A97-8472-77365B96F725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63590C4B-77D4-4A97-8472-77365B96F725}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
